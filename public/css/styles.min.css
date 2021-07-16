@@ -1,0 +1,85 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+.app___2khK2 {
+  margin: auto auto;
+  max-height: 100vh;
+  overflow: hidden;
+}
+.app___2khK2 .chart_container___3Jzlm {
+  background-color: #f0f0f0;
+}
+.app___2khK2 .chart_container___3Jzlm svg {
+  font-family: 'Baumans', sans-serif;
+}
+.app___2khK2 .chart_container___3Jzlm svg .img_profile___1tnLy {
+  background-position: center center;
+  background-size: cover;
+  border-radius: 50%;
+  box-shadow: 0px 0px 27px 2px rgba(0, 0, 0, 0.15) inset;
+  filter: grayscale(100%);
+  position: absolute;
+}
+.app___2khK2 .chart_container___3Jzlm svg .center_text___12SXS {
+  fill: #e16767;
+}
+.app___2khK2 .chart_container___3Jzlm svg .bars_container___152zo path {
+  fill: #e16767;
+}
+.app___2khK2 .chart_container___3Jzlm svg .bars_container___152zo path.legend_bar___2V3Ox {
+  opacity: 1!important;
+}
+.app___2khK2 .chart_container___3Jzlm svg .chart_legend_rings___eZkbG text {
+  fill: #e16767;
+}
+.app___2khK2 .chart_container___3Jzlm svg .bars_info_container___7zhd5 {
+  display: block;
+}
+.app___2khK2 .chart_container___3Jzlm svg .bars_info_container___7zhd5 .bar_info_container___2WYZP {
+  display: block;
+}
+.app___2khK2 .chart_container___3Jzlm svg .bars_info_container___7zhd5 .bar_info_container___2WYZP .selected_work_point___3O6wy {
+  display: block;
+}
+.app___2khK2 .chart_container___3Jzlm .work_info_extra___CGKRf {
+  position: relative;
+  top: 150px;
+  left: 70px;
+  font-size: 10px;
+  font-family: 'Baumans', sans-serif;
+  background: #f0f0f0;
+  padding: 0 5px;
+}
+/* General styles */
+.clearfix___1yHqr {
+  zoom: 1;
+}
+.clearfix___1yHqr:after {
+  clear: both;
+  content: ' ';
+  display: block;
+  height: 0;
+  visibility: hidden;
+}
+.ss-terms___dMEZ6 {
+  margin: 40px auto auto auto;
+  max-width: 450px;
+}
+.meta___3gcNx {
+  color: #333;
+  font-size: 13px;
+  line-height: 16px;
+  padding: 0 10px 40px 10px;
+}
+.clear_both___a0DL_ {
+  clear: both;
+}
+.hidden___1aMNf {
+  display: none;
+}
+.nowrap___2n1o8 {
+  white-space: nowrap;
+}
+

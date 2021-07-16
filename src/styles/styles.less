@@ -1,0 +1,69 @@
+//@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500.css');
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+.app {
+  margin: auto auto;
+  max-height: 100vh;
+  overflow: hidden;
+  .chart_container {
+    background-color: #f0f0f0;
+    svg {
+      font-family: 'Baumans', sans-serif;
+      .img_profile {
+        background-position: center center;
+        background-size: cover;
+        border-radius: 50%;
+        box-shadow: 0px 0px 27px 2px rgba(0, 0, 0, 0.15) inset;
+        filter: grayscale(100%);
+        position: absolute;
+      }
+      .center_text {
+        fill: #e16767;
+      }
+      .bars_container {
+        path {
+          fill: #e16767;
+          &.legend_bar {
+            opacity: 1!important;
+          } 
+        }
+      }
+
+      .bars_info_container {
+        .bar_info_container {
+
+        }
+      }
+      .chart_legend_rings {
+        text {
+          fill: #e16767;
+        }
+      }
+      .bars_info_container {
+        display: block;
+        .bar_info_container {
+          display: block;
+          .selected_work_point {
+            display: block;
+          }
+        }
+      }
+    }
+   
+    .work_info_extra {
+      position: relative;
+      top: 150px;
+      left: 70px;
+      font-size: 10px;
+      font-family: 'Baumans', sans-serif;
+      //background: rgba(255,255,255,0.5);
+      background: #f0f0f0;
+      padding: 0 5px;
+    }
+  }
+}
+
+@import 'basics.less';
