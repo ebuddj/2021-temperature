@@ -1,0 +1,14 @@
+/* === Baumans - regular */
+@font-face {
+	font-family: 'Baumans';
+	font-style: normal;
+	font-weight: 400;
+	font-display: swap;
+	src: url("./font/Baumans-Regular.eot");
+	src: local('Baumans'),
+		url("./font/Baumans-Regular.eot") format("embedded-opentype"),
+		url("./font/Baumans-Regular.woff2") format("woff2"),
+		url("./font/Baumans-Regular.woff") format("woff"),
+		url("./font/Baumans-Regular.ttf") format("truetype"),
+		url("./font/Baumans-Regular.svg") format("svg");
+}
