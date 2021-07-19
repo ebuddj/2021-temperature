@@ -12,27 +12,29 @@ body {
   background-color: #f0f0f0;
 }
 .app___2khK2 .chart_container___3Jzlm svg {
-  font-family: 'Baumans', sans-serif;
+  font-family: sans-serif;
 }
-.app___2khK2 .chart_container___3Jzlm svg .img_profile___1tnLy {
+.app___2khK2 .chart_container___3Jzlm svg .center_container___niuZu {
   background-position: center center;
   background-size: cover;
   border-radius: 50%;
-  box-shadow: 0px 0px 27px 2px rgba(0, 0, 0, 0.15) inset;
-  filter: grayscale(100%);
+  background-color: rgba(255, 255, 255, 0.9);
+  box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.15) inset;
+  filter: blur(2px);
   position: absolute;
 }
 .app___2khK2 .chart_container___3Jzlm svg .center_text___12SXS {
-  fill: #e16767;
+  fill: #000;
 }
-.app___2khK2 .chart_container___3Jzlm svg .bars_container___152zo path {
-  fill: #e16767;
+.app___2khK2 .chart_container___3Jzlm svg .center_text___12SXS .year___z7c-F {
+  font-size: 40pt;
+  font-weight: 600;
 }
 .app___2khK2 .chart_container___3Jzlm svg .bars_container___152zo path.legend_bar___2V3Ox {
   opacity: 1!important;
 }
 .app___2khK2 .chart_container___3Jzlm svg .chart_legend_rings___eZkbG text {
-  fill: #e16767;
+  fill: #000;
 }
 .app___2khK2 .chart_container___3Jzlm svg .bars_info_container___7zhd5 {
   display: block;
@@ -40,17 +42,13 @@ body {
 .app___2khK2 .chart_container___3Jzlm svg .bars_info_container___7zhd5 .bar_info_container___2WYZP {
   display: block;
 }
-.app___2khK2 .chart_container___3Jzlm svg .bars_info_container___7zhd5 .bar_info_container___2WYZP .selected_work_point___3O6wy {
-  display: block;
+.app___2khK2 .chart_container___3Jzlm svg .bars_info_container___7zhd5 .bar_info_container___2WYZP text {
+  opacity: 0.7;
 }
-.app___2khK2 .chart_container___3Jzlm .work_info_extra___CGKRf {
-  position: relative;
-  top: 150px;
-  left: 70px;
-  font-size: 10px;
-  font-family: 'Baumans', sans-serif;
-  background: #f0f0f0;
-  padding: 0 5px;
+.app___2khK2 .chart_container___3Jzlm svg .continent_text___1LQiN {
+  font-size: 10pt;
+  text-transform: uppercase;
+  fill: #000000;
 }
 /* General styles */
 .clearfix___1yHqr {
