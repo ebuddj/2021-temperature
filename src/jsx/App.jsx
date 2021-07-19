@@ -4,11 +4,20 @@ import style from './../styles/styles.less';
 // https://d3js.org/
 import * as d3 from 'd3';
 
+// https://vis4.net/chromajs/
+import chroma from 'chroma-js';
+
+// Use chroma to make the color scale.
+// https://gka.github.io/chroma.js/
+const f = chroma.scale('RdYlBu').domain([3,0,-3]);
+let interval;
+
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
+      year:1901
     }
   }
   componentDidMount() {
@@ -18,52 +27,26 @@ class App extends Component {
 
   }
   componentWillUnMount() {
-
-  }
-  parseHtmlToText(d) {
-    return d.replace(/(<([^>]+)>)/gi, '');
-  }
-  extractWorkYear(d) {
-    return +d.WORKS_NA_2.split(',')[1];
-  }
-  extractWorkNAME(d) {
-    return this.parseHtmlToText(d.WORKS_NA_2)
+    clearInterval(interval);
   }
   getData() {
-    const url = 'https://gist.githubusercontent.com/carmen-tm/6a679d25155e44fb05deb71a75fafa17/raw/ad5f5fef2f842258210754ae3ac442dc466bef4b/json_Designers_2.geojson';
-    let get_img = (string) => {
-      const array = string.split('/');
-      const img_name = array[array.length - 1].slice(0, -2);
+    d3.json('./data/data.json').then((data) => {
+      this.data = data;
 
-      return img_name;
-    }
-    d3.json(url).then((data) => {
-      data = data.features.map((d, i) => {
-        d.NAME = this.parseHtmlToText(d.properties.NAME);
-        d.SURNAME = this.parseHtmlToText(d.properties.SURNAME);
-        d.workPiece = this.extractWorkYear(d.properties);
-        d.id = 'woman-' + i;
-        d.imgProfile = get_img(d.properties.IMG_SRC_D);
-        d.YEAR_B = +d.properties.YEAR_B;
-        d.YEAR_D = +d.properties.YEAR_D;
-        d.WORKS_NA_2 = d.properties.WORKS_NA_2;
-        d.wikipedia = 'https://yle.fi';
-        return d;
-      }).sort((b, a) => this.extractWorkYear(a.properties) - this.extractWorkYear(b.properties));
-      this.createRadialChart(data);
+      this.createRadialChart(data[this.state.year]);
     });
   }
   createRadialChart(data) {
     // Define contants.
     const margin = { top: 0, right: 50, bottom: 0, left: 0 }, // Define margins.
-          inner_radius = 50, // Define the inner radius of chart.
-          outer_radius = 350, // Define the outer radius of chart.
-          my_domain = [1850, 2021], // Define the scale domain
-          legend_ring_points = [1920, 1940, 1960, 1980, 2000, 2020],
+          inner_radius = 0, // Define the inner radius of chart.
+          outer_radius = 400, // Define the outer radius of chart.
+          my_domain = [-3.5, 2.2], // Define the scale domain
+          legend_ring_points = [-2, -1, 0, 1, 2],
           color_main = '#e16767', // Define the base main color.
           // Define the x and y radial.
           x = d3.scaleBand()
-                .range([Math.PI / 2 + 0.04, Math.PI / 2 + 2 * Math.PI - 0.1])
+                .range([Math.PI / 2 + 0.07, Math.PI / 2 + 2 * Math.PI - 0.1])
                 .align(0)
                 .domain(data.map(d => d.id)),
           y = d3.scaleLinear()
@@ -85,10 +68,10 @@ class App extends Component {
                               .attr('class', style.chart_elements)
                               .attr('transform', 'translate(0, ' + margin.top + ')');
 
+    // Create radial bars.
+    this.createRadialBars(data, chart_elements, inner_radius, width, height, x, y, my_domain);
     // Create the center container.
     this.createCenterContainer(chart_elements, width, height, margin);
-    // Create radial bars.
-    this.createRadialBars(data, chart_elements, inner_radius, width, height, x, y);
     // Create the interactive layer.
     // this.createInteractiveLayer(width, height);
     // Create radial rings.
@@ -96,43 +79,56 @@ class App extends Component {
     // Create bar info.
     this.createBarInfo(data, chart_elements, width, height, x, y, my_domain)
     // Create a legend.
-    this.createLegend(svg);
+    // this.createLegend(svg);
 
-
-    setInterval(() => {
-      this.updateRadialBars(data, chart_elements, inner_radius, width, height, x, y);
-    }, 2000);
+    setTimeout(() => {
+      interval = setInterval(() => {
+        this.setState((state, props) => ({
+          year:state.year +1
+        }), () => {
+          this.updateCenterContainer(width, height, margin);
+          this.updateRadialBars(this.data[this.state.year], chart_elements, inner_radius, width, height, x, y, my_domain)
+        });
+        if (this.state.year >= 2020) {
+          clearInterval(interval);
+        }
+      }, 400);
+    }, 3500);
   }
   createCenterContainer(chart_elements, width, height, margin) {
-    const img_diameter = 200;
+    const img_diameter = 210;
     chart_elements.append('foreignObject')
       .attr('x', (width / 2 - img_diameter / 2) + 'px')
       .attr('y', (height / 2 - img_diameter / 2) + 'px')
       .style('width', img_diameter + 'px')
       .style('height', img_diameter + 'px')
-      .html('<div class="' + style.img_profile + '" style="width: ' + img_diameter + 'px; height: ' + img_diameter + 'px;"></div>');
+      .html('<div class="' + style.center_container + '" style="width: ' + img_diameter + 'px; height: ' + img_diameter + 'px;"></div>');
     chart_elements.append('g')
       .attr('class', style.center_text)
       .append('text')
-      .attr('y', margin.top + height / 2 - 25)
+      .attr('y', margin.top + height / 2)
       .style('dominant-baseline', 'hanging')
       .style('text-anchor', 'middle')
-      .html('<tspan style="font-size: 19px;" x="' + (width / 2) + '" y="' + (margin.top + height / 2 - 25) + '">100 years</tspan><tspan style="font-size: 16px; font-weight: 600;" x="' + (width / 2) + '" y="' + (margin.top + height / 2) + '">100 INSPIRING WOMEN</tspan><tspan style="font-size: 12px;" x="' + (width/2) + '" y="' + (margin.top + height / 2 + 20) +'">just in Europe</tspan>');
+      .html('<tspan style="font-size: 20px;" x="' + (width / 2) + '" y="' + (margin.top + height / 2 - 35) + '">Year</tspan><tspan class="' + style.year + '" x="' + (width / 2) + '" y="' + (margin.top + height / 2 - 10) + '">' + this.state.year + '</tspan>');
   }
-  createRadialBars(data, chart_elements, inner_radius, width, height, x, y) {
+  updateCenterContainer(width, height) {
+    d3.select('.' + style.center_text).select('text').select('.' + style.year).html(this.state.year);
+  }
+  createRadialBars(data, chart_elements, inner_radius, width, height, x, y, my_domain) {
     chart_elements.append('g')
                   .attr('class', style.bars_container)
                   .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
                   .selectAll('path')
                   .data(data).enter()
                   .append('path')
+                  .attr('fill', d => f(d['temp']))
                   .attr('data-id', d => d.id)
                   .attr('d', d3.arc()
-                               .innerRadius(d => y(d['YEAR_B']))
-                               .outerRadius(d => y(d['YEAR_D'] || 2021))
+                               .innerRadius(d => y(my_domain[0]))
+                               .outerRadius(d => (d.country !== '') ? y(d['temp']) : y(my_domain[0]))
                                .startAngle(d => x(d.id))
                                .endAngle(d => x(d.id) + x.bandwidth())
-                               .padAngle(0.15)
+                               // .padAngle(0.15)
                                .padRadius(inner_radius))
                   .attr('opacity', 0)
                   .transition()
@@ -141,20 +137,19 @@ class App extends Component {
                   .attr('opacity', 1)
                   .style('pointer-events', 'none');
   }
-  updateRadialBars(data, chart_elements, inner_radius, width, height, x, y) {
-    let min = -20;
-    let max = 20;
+  updateRadialBars(data, chart_elements, inner_radius, width, height, x, y, my_domain) {
     d3.selectAll('.' + style.bars_container)
       .selectAll('path')
       .transition()
-      .duration(2000)
+      .duration(350)
+      .attr('fill', d => (d.country !== '') ? f(data.find(element => element.country === d['country'])['temp']) : y(my_domain[0]))
       .attr('d', d3.arc()
-      .innerRadius(d => y(d['YEAR_B'] + Math.floor(Math.random() * (max - min + 1) + min)))
-      .outerRadius(d => y(d['YEAR_D'] + Math.floor(Math.random() * (max - min + 1) + min) || 2021))
-      .startAngle(d => x(d.id))
-      .endAngle(d => x(d.id) + x.bandwidth())
-      .padAngle(0.15)
-      .padRadius(inner_radius))
+                  .innerRadius(d => y(my_domain[0]))
+                  .outerRadius(d => (d.country !== '') ? y(data.find(element => element.country === d['country'])['temp']) : y(my_domain[0]))
+                  .startAngle(d => x(d.id))
+                  .endAngle(d => x(d.id) + x.bandwidth())
+                  // .padAngle(0.15)
+                  .padRadius(inner_radius));
   }
   createRadialRings(chart_elements, width, height, y, legend_ring_points, color_main) {
     const chart_legend_rings = chart_elements.append('g').attr('class', style.chart_legend_rings);
@@ -165,17 +160,18 @@ class App extends Component {
                       .attr('cy', height / 2)
                       .attr('r', d => y(d))
                       .style('fill', 'none')
-                      .style('stroke', 'white')
-                      .style('stroke-width', '2')
+                      .style('stroke', (d) => (d === 0) ? '#fff' : '#fff')
+                      .style('stroke-width', (d) => (d === 0) ? 4 : 2)
                       .style('pointer-events', 'none');
     chart_legend_rings.selectAll('text')
                       .data(legend_ring_points)
                       .join('text')
                       .attr('x', d => width / 2 + y(d) + 2)
                       .attr('y', d => height / 2)
-                      .text(d => d)
+                      .text(d => (d > 0) ? '+' + d + '.0 °C' : d + '.0 °C')
                       .style('opacity', 0.7)
-                      .style('font-size', '12px')
+                      .style('font-size', (d) => (d === 0) ? '12pt' : '10pt')
+                      .style('font-weight', (d) => (d === 0) ? 600 : 400)
                       .style('pointer-events', 'none');
   }
   createBarInfo(data, chart_elements, width, height, x, y, my_domain) {
@@ -189,8 +185,8 @@ class App extends Component {
                   .attr('id', d => d.id)
                   .attr('opacity', 0.8)
                   .attr('transform', (d) => {
-                    const angleToRotate = ((x(d.id) + x.bandwidth() / 2) * 180) / Math.PI - 90;
-                    return `rotate(${angleToRotate})`;
+                    const angle_to_rotate = ((x(d.id) + x.bandwidth() / 2) * 180) / Math.PI - 90;
+                    return 'rotate(' + angle_to_rotate + ')';
                   })
                   .attr('text-anchor', (d) => {
                     return (x(d.id) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? 'end' : 'start';
@@ -200,32 +196,77 @@ class App extends Component {
                     // Name.
                     el.append('text')
                       .attr('data-id', d => d.id)
-                      .style('opacity', d => d.wikipedia != '' && d.wikipedia != 'x' ? 0.7 : 0.3)
-                      .attr('x', d => (x(d.id) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? -y(d['YEAR_D'] || 2021) - 10 : y(d['YEAR_D'] || 2021) + 10)
+                      .attr('x', d => (x(d.id) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? -y(my_domain[1]) - 10 : y(my_domain[1]) + 10)
                       .attr('y', 0)
-                      .text(d => d.NAME + ' ' + d.SURNAME.charAt(0) + '.')
-                      .style('font-size', '15px')
+                      .text(d => d.country)
+                      .style('font-size', '8pt')
                       .style('dominant-baseline', 'middle')
                       // Rotation to improve readability
                       .attr('transform', d => (x(d.id) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? 'rotate(180)' : 'rotate(0)')
                     // Radial line
                     el.append('line')
                       .attr('x1', 120)
-                      .attr('x2', y(my_domain[1]) + 100)
+                      .attr('x2', y(my_domain[1]) + 5)
                       .attr('y1', 0)
                       .attr('y2', 0)
-                      .style('opacity', 0.5)
+                      .style('opacity', 0.4)
                       .style('stroke', '#000')
                       .style('stroke-width', 0.15);
                     // Circles on bars.
-                    el.append('circle')
-                      .attr('class', style.selected_work_point)
-                      .attr('cx', d => y(this.extractWorkYear(d)))
-                      .attr('cy', 0)
-                      .attr('r', 2.5)
-                      .style('fill', '#000');
                   })
                   .style('pointer-events', 'none');
+
+    let continents_data = [{name: "Africa", value: 55},{name: "Asia", value: 42},{name: "Europe", value: 49},{name: "Oceania", value: 20},{name: "N. America", value: 20},{name: "S. America", value: 13}];
+
+    let pie = d3.pie()
+      .startAngle(95 * Math.PI/180)
+      .endAngle(85 * Math.PI/180 + 2 * Math.PI)
+      .value(d => d.value)
+      .sort(null);
+
+    chart_elements.selectAll('.continent_arcs')
+      .data(pie(continents_data))
+      .enter().append('path')
+      .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
+      .attr('class', 'continent_arcs')
+      .attr('d',  d3.arc().innerRadius(300).outerRadius(301))
+      .style("fill", (d,i) => 'transparent')
+      .each((d,i,nodes) => {
+        //Search pattern for everything between the start and the first capital L
+        let firstArcSection = /(^.+?)L/;  
+        let new_arc = firstArcSection.exec(d3.select(nodes[i]).attr('d'))[1].replace(/,/g , ' ');;
+        if (d.endAngle > Math.PI/2 && d.endAngle < 270 * Math.PI/180) {
+          let start_loc = /M(.*?)A/,
+              middle_loc  = /A(.*?)0 0 1/,
+              end_loc = /0 0 1 (.*?)$/;
+          let new_start = end_loc.exec(new_arc)[1];
+          let new_end = start_loc.exec(new_arc)[1];
+          let middle_sec = middle_loc.exec(new_arc)[1];
+          //Build up the new arc notation, set the sweep-flag to 0
+          new_arc = 'M' + new_start + 'A' + middle_sec + '0 0 0 ' + new_end;
+        }//if
+        
+        //Create a new invisible arc that the text can flow along
+        chart_elements.append('path')
+          .attr('class', 'hidden_continent_arcs')
+          .attr('id', 'continent_arc' + i)
+          .attr('d', new_arc)
+          .attr('transform', 'translate(' + width / 2 + ',' + height / 2 + ')')
+          .style('fill', 'none');
+    });
+
+    //Append the month names within the arcs
+    chart_elements.selectAll('.' + style.continent_text)
+      .data(pie(continents_data))
+      .enter().append('text')
+      .attr('class', style.continent_text)
+      .attr('dy', d => (d.endAngle > Math.PI/2 && d.endAngle < 270 * Math.PI/180 ? 10 : 0))
+      .append('textPath')
+      .attr('startOffset','50%')
+      .style('text-anchor','middle')
+      .attr('xlink:href', (d,i) => '#continent_arc' + i)
+      .text((d) => d.data.name);
+
   }
   createLegend(svg) {
     // Legend.

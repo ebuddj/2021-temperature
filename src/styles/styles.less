@@ -11,57 +11,52 @@ body {
   .chart_container {
     background-color: #f0f0f0;
     svg {
-      font-family: 'Baumans', sans-serif;
-      .img_profile {
+      font-family: sans-serif;
+      .center_container {
         background-position: center center;
         background-size: cover;
         border-radius: 50%;
-        box-shadow: 0px 0px 27px 2px rgba(0, 0, 0, 0.15) inset;
-        filter: grayscale(100%);
+        background-color: rgba(255, 255, 255, 0.9);
+        box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.15) inset;
+        filter: blur(2px);
         position: absolute;
       }
       .center_text {
-        fill: #e16767;
+        // fill: #e16767;
+        fill: #000;
+        .year {
+          font-size: 40pt;
+          font-weight: 600;
+        }
       }
       .bars_container {
         path {
-          fill: #e16767;
           &.legend_bar {
             opacity: 1!important;
           } 
         }
       }
 
-      .bars_info_container {
-        .bar_info_container {
-
-        }
-      }
       .chart_legend_rings {
         text {
-          fill: #e16767;
+          // fill: #e16767;
+          fill: #000;
         }
       }
       .bars_info_container {
         display: block;
         .bar_info_container {
           display: block;
-          .selected_work_point {
-            display: block;
+          text {
+            opacity: 0.7;
           }
         }
       }
-    }
-   
-    .work_info_extra {
-      position: relative;
-      top: 150px;
-      left: 70px;
-      font-size: 10px;
-      font-family: 'Baumans', sans-serif;
-      //background: rgba(255,255,255,0.5);
-      background: #f0f0f0;
-      padding: 0 5px;
+      .continent_text {
+        font-size: 10pt;
+        text-transform: uppercase;
+        fill: rgba(0, 0, 0, 1);
+      }
     }
   }
 }

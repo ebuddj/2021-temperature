@@ -6,8 +6,10 @@
 
 Inspired by https://observablehq.com/@carmen-tm/women-architects-i-didnt-hear-about?collection=@observablehq/featured-creators and https://www.youtube.com/watch?v=-yIHxOui9nQ.
 
+Missing data for Armenia and Belize.
+
 **Sources**
-* []()
+* [Worldbank](https://climateknowledgeportal.worldbank.org/download-data)
 
 **EBU links**
 * []()

@@ -1,0 +1,14 @@
+{
+  "name": "@carmen-tm/women-architects-i-didnt-hear-about",
+  "main": "50227a0d9fa32806@1921.js",
+  "version": "1921.0.0",
+  "homepage": "https://observablehq.com/@carmen-tm/women-architects-i-didnt-hear-about",
+  "author": {
+    "name": "Carmen Torrecillas",
+    "url": "https://observablehq.com/@carmen-tm"
+  },
+  "type": "module",
+  "peerDependencies": {
+    "@observablehq/runtime": "4"
+  }
+}
