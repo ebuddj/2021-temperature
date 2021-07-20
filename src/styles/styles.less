@@ -1,4 +1,4 @@
-//@import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500.css');
+// @import url('https://fonts.googleapis.com/css?family=Lato:300,400,700.css');
 html,
 body {
   margin: 0;
@@ -11,12 +11,37 @@ body {
   .chart_container {
     background-color: #f0f0f0;
     svg {
-      font-family: sans-serif;
+      font-family: 'Lato';
+      .title {
+        font-size: 20pt;
+      }
+      .line_container {
+        path {
+          stroke-width: 0.5;
+          stroke: rgba(0, 0, 0, 0.5);
+          &.current_avg_temp_line {
+            fill: none;
+            stroke-width: 1.5;
+          }
+        }
+        .grid {
+          line {
+            stroke-width: 0.5;
+            stroke: rgba(0, 0, 0, 0.5);
+          }
+        }
+        .linegraptext {
+          font-size: 7pt;
+          font-weight: 700;
+          text-transform: uppercase;
+        }
+        
+      }
       .center_container {
+        background-color: rgba(255, 255, 255, 0.9);
         background-position: center center;
         background-size: cover;
         border-radius: 50%;
-        background-color: rgba(255, 255, 255, 0.9);
         box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.15) inset;
         filter: blur(2px);
         position: absolute;
@@ -24,24 +49,27 @@ body {
       .center_text {
         // fill: #e16767;
         fill: #000;
-        .year {
-          font-size: 40pt;
-          font-weight: 600;
+        tspan {
+          text-transform: uppercase;
+          &.year_text {
+            font-size: 14pt;
+          }
+          &.year {
+            font-size: 40pt;
+            font-weight: 700;
+          }
+          &.temp {
+            font-size: 18pt;
+          }
+        }
+      }
+      .chart_legend_rings {
+        text {
+          fill: #000;
         }
       }
       .bars_container {
-        path {
-          &.legend_bar {
-            opacity: 1!important;
-          } 
-        }
-      }
-
-      .chart_legend_rings {
-        text {
-          // fill: #e16767;
-          fill: #000;
-        }
+        display: block;
       }
       .bars_info_container {
         display: block;
@@ -53,10 +81,54 @@ body {
         }
       }
       .continent_text {
-        font-size: 10pt;
-        text-transform: uppercase;
         fill: rgba(0, 0, 0, 1);
+        font-size: 11pt;
       }
+    }
+  }
+  .scales_container {
+    bottom: 60px;
+    color: #000;
+    font-family: sans-serif;
+    font-size: 8pt;
+    font-weight: 400;
+    opacity: 1;
+    position: absolute;
+    left: calc(50% + 200px);
+    &:after,
+    &:before {
+      display: inline-block;
+      line-height: 14px;
+      position: absolute;
+      text-align: center;
+      width: 28px;
+    }
+    &:before {
+      content: '+3 °C';
+      right: -31px;
+      text-align: left;
+    }
+    &:after {
+      content: '-3 °C';
+      left: -31px;
+      text-align: right;
+    }
+    .scale_container {
+      color: #000;
+      display: inline-block;
+      float: left;
+      height: 14px;
+      width: 1.8px;
+      .scale_text_zero {
+        left: -10px;
+        line-height: 14px;
+        position: relative;
+        text-align: center;
+        width: 25px;
+      }
+      // .scale_text_zero {
+      //   display: none;
+      // }
     }
   }
 }
