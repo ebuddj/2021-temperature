@@ -6,15 +6,13 @@ import * as d3 from 'd3';
 
 // https://vis4.net/chromajs/
 import chroma from 'chroma-js';
-
 // Use chroma to make the color scale.
 // https://gka.github.io/chroma.js/
-
 const scaleMax = 3,
       scaleMin = -3,
       f = chroma.scale('RdYlBu').padding(-0.1).domain([scaleMax, 0, scaleMin]),
-      f_text = chroma.scale(['red', 'rgba(0, 0, 0, 0.3)', 'blue']).padding(-1).domain([scaleMax, 0, scaleMin]),
-      margin = {top: 0, right: 50, bottom: 0, left: 0},
+      f_text = chroma.scale(['red', 'rgba(0, 0, 0, 0.3)', 'blue']).padding(-1).domain([scaleMax, 0, scaleMin]);
+const margin = {top: 0, right: 50, bottom: 0, left: 0},
       inner_radius = 0,
       outer_radius = 400,
       my_domain = [-3.5, 2.2],
