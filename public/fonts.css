@@ -1,14 +1,29 @@
-/* === Baumans - regular */
+/* === Lato - regular */
 @font-face {
-	font-family: 'Baumans';
+	font-family: 'Lato';
 	font-style: normal;
 	font-weight: 400;
 	font-display: swap;
-	src: url("./font/Baumans-Regular.eot");
-	src: local('Baumans'),
-		url("./font/Baumans-Regular.eot") format("embedded-opentype"),
-		url("./font/Baumans-Regular.woff2") format("woff2"),
-		url("./font/Baumans-Regular.woff") format("woff"),
-		url("./font/Baumans-Regular.ttf") format("truetype"),
-		url("./font/Baumans-Regular.svg") format("svg");
+	src: url("./font/Lato-Regular.eot");
+	src: local('Lato'),
+		url("./font/Lato-Regular.eot") format("embedded-opentype"),
+		url("./font/Lato-Regular.woff2") format("woff2"),
+		url("./font/Lato-Regular.woff") format("woff"),
+		url("./font/Lato-Regular.ttf") format("truetype"),
+		url("./font/Lato-Regular.svg") format("svg");
+}
+
+/* === Lato - 700 */
+@font-face {
+	font-family: 'Lato';
+	font-style: normal;
+	font-weight: 700;
+	font-display: swap;
+	src: url("./font/Lato-Bold.eot");
+	src: local('Lato'),
+		url("./font/Lato-Bold.eot") format("embedded-opentype"),
+		url("./font/Lato-Bold.woff2") format("woff2"),
+		url("./font/Lato-Bold.woff") format("woff"),
+		url("./font/Lato-Bold.ttf") format("truetype"),
+		url("./font/Lato-Bold.svg") format("svg");
 }
