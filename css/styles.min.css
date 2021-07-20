@@ -12,13 +12,33 @@ body {
   background-color: #f0f0f0;
 }
 .app___2khK2 .chart_container___3Jzlm svg {
-  font-family: sans-serif;
+  font-family: 'Lato';
+}
+.app___2khK2 .chart_container___3Jzlm svg .title___2r2fk {
+  font-size: 20pt;
+}
+.app___2khK2 .chart_container___3Jzlm svg .line_container___30zFu path {
+  stroke-width: 0.5;
+  stroke: rgba(0, 0, 0, 0.5);
+}
+.app___2khK2 .chart_container___3Jzlm svg .line_container___30zFu path.current_avg_temp_line___21a-V {
+  fill: none;
+  stroke-width: 1.5;
+}
+.app___2khK2 .chart_container___3Jzlm svg .line_container___30zFu .grid___3zkE4 line {
+  stroke-width: 0.5;
+  stroke: rgba(0, 0, 0, 0.5);
+}
+.app___2khK2 .chart_container___3Jzlm svg .line_container___30zFu .linegraptext___2C4-R {
+  font-size: 7pt;
+  font-weight: 700;
+  text-transform: uppercase;
 }
 .app___2khK2 .chart_container___3Jzlm svg .center_container___niuZu {
+  background-color: rgba(255, 255, 255, 0.9);
   background-position: center center;
   background-size: cover;
   border-radius: 50%;
-  background-color: rgba(255, 255, 255, 0.9);
   box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.15) inset;
   filter: blur(2px);
   position: absolute;
@@ -26,15 +46,24 @@ body {
 .app___2khK2 .chart_container___3Jzlm svg .center_text___12SXS {
   fill: #000;
 }
-.app___2khK2 .chart_container___3Jzlm svg .center_text___12SXS .year___z7c-F {
-  font-size: 40pt;
-  font-weight: 600;
+.app___2khK2 .chart_container___3Jzlm svg .center_text___12SXS tspan {
+  text-transform: uppercase;
 }
-.app___2khK2 .chart_container___3Jzlm svg .bars_container___152zo path.legend_bar___2V3Ox {
-  opacity: 1!important;
+.app___2khK2 .chart_container___3Jzlm svg .center_text___12SXS tspan.year_text___3ryI5 {
+  font-size: 14pt;
+}
+.app___2khK2 .chart_container___3Jzlm svg .center_text___12SXS tspan.year___z7c-F {
+  font-size: 40pt;
+  font-weight: 700;
+}
+.app___2khK2 .chart_container___3Jzlm svg .center_text___12SXS tspan.temp___1zivY {
+  font-size: 18pt;
 }
 .app___2khK2 .chart_container___3Jzlm svg .chart_legend_rings___eZkbG text {
   fill: #000;
+}
+.app___2khK2 .chart_container___3Jzlm svg .bars_container___152zo {
+  display: block;
 }
 .app___2khK2 .chart_container___3Jzlm svg .bars_info_container___7zhd5 {
   display: block;
@@ -46,9 +75,50 @@ body {
   opacity: 0.7;
 }
 .app___2khK2 .chart_container___3Jzlm svg .continent_text___1LQiN {
-  font-size: 10pt;
-  text-transform: uppercase;
   fill: #000000;
+  font-size: 11pt;
+}
+.app___2khK2 .scales_container___1pYId {
+  bottom: 60px;
+  color: #000;
+  font-family: sans-serif;
+  font-size: 8pt;
+  font-weight: 400;
+  opacity: 1;
+  position: absolute;
+  left: calc(50% + 200px);
+}
+.app___2khK2 .scales_container___1pYId:after,
+.app___2khK2 .scales_container___1pYId:before {
+  display: inline-block;
+  line-height: 14px;
+  position: absolute;
+  text-align: center;
+  width: 28px;
+}
+.app___2khK2 .scales_container___1pYId:before {
+  content: '+3 °C';
+  right: -31px;
+  text-align: left;
+}
+.app___2khK2 .scales_container___1pYId:after {
+  content: '-3 °C';
+  left: -31px;
+  text-align: right;
+}
+.app___2khK2 .scales_container___1pYId .scale_container___3Z0k5 {
+  color: #000;
+  display: inline-block;
+  float: left;
+  height: 14px;
+  width: 1.8px;
+}
+.app___2khK2 .scales_container___1pYId .scale_container___3Z0k5 .scale_text_zero___20zq_ {
+  left: -10px;
+  line-height: 14px;
+  position: relative;
+  text-align: center;
+  width: 25px;
 }
 /* General styles */
 .clearfix___1yHqr {
