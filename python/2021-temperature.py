@@ -77,32 +77,29 @@ for year in range(year_start, (year_end + 1), 1):
     data_tmp[year].sort(key = lambda x:x['continent'])
 
 data = {}
-i = 0
-prev_continent = ''
 for year in range(year_start, (year_end + 1), 1):
+  i = 0
+  prev_continent = ''
   data[year] = []
   for country in data_tmp[year]:
-    if year == 1901:
-      if country['continent'] != prev_continent and prev_continent != '':
-        data[year].append({
-          'id':i,
-          'country':'',
-          'continent':'',
-          'temp':0
-        })
-        i = i + 1
-        data[year].append({
-          'id':i,
-          'country':'',
-          'continent':'',
-          'temp':0
-        })
-        i = i + 1
-      country['id'] = i
-      data[year].append(country)
+    if country['continent'] != prev_continent and prev_continent != '':
+      data[year].append({
+        'id':i,
+        'country':'',
+        'continent':'',
+        'temp':0
+      })
       i = i + 1
-    else:
-      data[year].append(country)
+      data[year].append({
+        'id':i,
+        'country':'',
+        'continent':'',
+        'temp':0
+      })
+      i = i + 1
+    country['id'] = i
+    data[year].append(country)
+    i = i + 1
 
     prev_continent = country['continent']
 

@@ -5,13 +5,22 @@ body {
   padding: 0;
 }
 .app {
+  font-family: 'Lato';
   margin: auto auto;
   max-height: 100vh;
   overflow: hidden;
+  .tooltip {
+    background-color: rgba(255, 255, 255, 0.9);
+    font-size: 12pt;
+    opacity: 0;
+    border: 1px solid #ccc;
+    padding: 4px 7px;
+    position: fixed;
+    z-index: 3;
+  }
   .chart_container {
     background-color: #f0f0f0;
     svg {
-      font-family: 'Lato';
       .title {
         font-size: 20pt;
       }
@@ -35,7 +44,6 @@ body {
           font-weight: 700;
           text-transform: uppercase;
         }
-        
       }
       .center_container {
         background-color: rgba(255, 255, 255, 0.9);
@@ -44,18 +52,21 @@ body {
         border-radius: 50%;
         box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.15) inset;
         filter: blur(2px);
-        position: absolute;
+        position: fixed;
       }
       .center_text {
         // fill: #e16767;
         fill: #000;
         tspan {
+          z-index: 2;
+          position: absolute;
           text-transform: uppercase;
           &.year_text {
             font-size: 14pt;
           }
           &.year {
             font-size: 40pt;
+            line-height: 40pt;
             font-weight: 700;
           }
           &.temp {
@@ -86,6 +97,32 @@ body {
       }
     }
   }
+  .bars_aux {
+    display: block;
+  }
+  .range_container {
+    bottom: 50px;
+    display: block;
+    font-size: 9pt;
+    left: calc(50% - 450px);
+    position: absolute;
+    width: 200px;
+    z-index: 1;
+    a {
+      color: #000;
+      text-decoration: none;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+    input[type=range] {
+      box-sizing: border-box;
+      cursor: pointer;
+      outline: none;
+      pointer-events: auto;
+      width: 100%;
+    }
+  }
   .scales_container {
     bottom: 60px;
     color: #000;
@@ -93,6 +130,7 @@ body {
     font-size: 8pt;
     font-weight: 400;
     opacity: 1;
+    z-index: 1;
     position: absolute;
     left: calc(50% + 200px);
     &:after,
@@ -126,9 +164,6 @@ body {
         text-align: center;
         width: 25px;
       }
-      // .scale_text_zero {
-      //   display: none;
-      // }
     }
   }
 }
