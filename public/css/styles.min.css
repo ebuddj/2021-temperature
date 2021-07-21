@@ -4,15 +4,22 @@ body {
   padding: 0;
 }
 .app___2khK2 {
+  font-family: 'Lato';
   margin: auto auto;
   max-height: 100vh;
   overflow: hidden;
 }
+.app___2khK2 .tooltip___MFNHN {
+  background-color: rgba(255, 255, 255, 0.9);
+  font-size: 12pt;
+  opacity: 0;
+  border: 1px solid #ccc;
+  padding: 4px 7px;
+  position: fixed;
+  z-index: 3;
+}
 .app___2khK2 .chart_container___3Jzlm {
   background-color: #f0f0f0;
-}
-.app___2khK2 .chart_container___3Jzlm svg {
-  font-family: 'Lato';
 }
 .app___2khK2 .chart_container___3Jzlm svg .title___2r2fk {
   font-size: 20pt;
@@ -41,12 +48,14 @@ body {
   border-radius: 50%;
   box-shadow: 0px 0px 20px 2px rgba(0, 0, 0, 0.15) inset;
   filter: blur(2px);
-  position: absolute;
+  position: fixed;
 }
 .app___2khK2 .chart_container___3Jzlm svg .center_text___12SXS {
   fill: #000;
 }
 .app___2khK2 .chart_container___3Jzlm svg .center_text___12SXS tspan {
+  z-index: 2;
+  position: absolute;
   text-transform: uppercase;
 }
 .app___2khK2 .chart_container___3Jzlm svg .center_text___12SXS tspan.year_text___3ryI5 {
@@ -54,6 +63,7 @@ body {
 }
 .app___2khK2 .chart_container___3Jzlm svg .center_text___12SXS tspan.year___z7c-F {
   font-size: 40pt;
+  line-height: 40pt;
   font-weight: 700;
 }
 .app___2khK2 .chart_container___3Jzlm svg .center_text___12SXS tspan.temp___1zivY {
@@ -78,6 +88,32 @@ body {
   fill: #000000;
   font-size: 11pt;
 }
+.app___2khK2 .bars_aux___NTitX {
+  display: block;
+}
+.app___2khK2 .range_container___RQeFs {
+  bottom: 50px;
+  display: block;
+  font-size: 9pt;
+  left: calc(50% - 450px);
+  position: absolute;
+  width: 200px;
+  z-index: 1;
+}
+.app___2khK2 .range_container___RQeFs a {
+  color: #000;
+  text-decoration: none;
+}
+.app___2khK2 .range_container___RQeFs a:hover {
+  text-decoration: underline;
+}
+.app___2khK2 .range_container___RQeFs input[type=range] {
+  box-sizing: border-box;
+  cursor: pointer;
+  outline: none;
+  pointer-events: auto;
+  width: 100%;
+}
 .app___2khK2 .scales_container___1pYId {
   bottom: 60px;
   color: #000;
@@ -85,6 +121,7 @@ body {
   font-size: 8pt;
   font-weight: 400;
   opacity: 1;
+  z-index: 1;
   position: absolute;
   left: calc(50% + 200px);
 }
