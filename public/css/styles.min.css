@@ -4,9 +4,10 @@ body {
   padding: 0;
 }
 .app___2khK2 {
+  background-color: #f0f0f0;
   font-family: 'Lato';
   margin: auto auto;
-  max-height: 100vh;
+  height: 100vh;
   overflow: hidden;
 }
 .app___2khK2 .tooltip___MFNHN {
@@ -17,9 +18,6 @@ body {
   padding: 4px 7px;
   position: fixed;
   z-index: 3;
-}
-.app___2khK2 .chart_container___3Jzlm {
-  background-color: #f0f0f0;
 }
 .app___2khK2 .chart_container___3Jzlm svg .title___2r2fk {
   font-size: 20pt;
@@ -123,7 +121,7 @@ body {
   opacity: 1;
   z-index: 1;
   position: absolute;
-  left: calc(50% + 200px);
+  left: calc(50% + 230px);
 }
 .app___2khK2 .scales_container___1pYId:after,
 .app___2khK2 .scales_container___1pYId:before {
@@ -148,7 +146,7 @@ body {
   display: inline-block;
   float: left;
   height: 14px;
-  width: 1.8px;
+  width: 1.6px;
 }
 .app___2khK2 .scales_container___1pYId .scale_container___3Z0k5 .scale_text_zero___20zq_ {
   left: -10px;
