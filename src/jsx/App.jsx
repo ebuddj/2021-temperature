@@ -224,7 +224,7 @@ class App extends Component {
       .data(legend_ring_points)
       .join('text')
       .attr('x', d => width / 2 + y(d) + 2)
-      .attr('y', d => height / 2)
+      .attr('y', d => height / 2 + 3)
       .text(d => (d > 0) ? '+' + d + '.0 °C' : d + '.0 °C')
       .style('opacity', 0.7)
       .style('font-size', d => (d === 0) ? '12pt' : '10pt')
