@@ -46,14 +46,14 @@ df_metadata = pd.read_csv('../data/metadata.csv')
 # Define variables.
 # https://en.wikipedia.org/wiki/List_of_ISO_3166_country_codes
 countries = df.ISO3.unique().tolist()
-del countries[countries.index("ARM")]
-del countries[countries.index("BLZ")]
+del countries[countries.index('ARM')]
+del countries[countries.index('BLZ')]
 # countries = ['CAN','FRA','FIN','BRA','USA','ESP']
 
 # Let's calculate the yearly averages per country.
 averages = {}
-compare_year_start = 1981
-compare_year_end = 2010
+compare_year_start = 1951
+compare_year_end = 1980
 for country in countries:
   averages[country] = df.loc[(df['ISO3'] == country) & (df['Year'] >= compare_year_start) & (df['Year'] <= compare_year_end)]['Temperature'].mean()
 

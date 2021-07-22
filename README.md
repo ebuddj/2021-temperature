@@ -4,12 +4,15 @@
 
 ## Temperature anomalities (EBU)
 
+The temperature anomalities per country per year compared to the mean between 1951 and 1980.
+
 Inspired by https://observablehq.com/@carmen-tm/women-architects-i-didnt-hear-about?collection=@observablehq/featured-creators and https://www.youtube.com/watch?v=-yIHxOui9nQ.
 
 Missing data for Armenia and Belize.
 
 **Sources**
 * [Worldbank](https://climateknowledgeportal.worldbank.org/download-data)
+* [NASA](https://data.giss.nasa.gov/gistemp/)
 
 **EBU links**
 * []()

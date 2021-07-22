@@ -15,8 +15,8 @@ const scaleMax = 3,
 const margin = {top: 0, right: 50, bottom: 0, left: 0},
       inner_radius = 0,
       outer_radius = 400,
-      my_domain = [-3.5, 2.2],
-      legend_ring_points = [-2, -1, 0, 1, 2],
+      my_domain = [-3.5, 3.5],
+      legend_ring_points = [-2, -1, 0, 1, 2, 3],
       height = window.innerHeight - margin.top - margin.bottom,
       width = window.innerWidth - margin.left - margin.right;
 
@@ -69,6 +69,7 @@ class App extends Component {
         let temperature = data[year].reduce((accumulator, current, index, array) => (accumulator + current.temp), 0) / data[year].length;
         avg_tmps.push(temperature);
       });
+      avg_tmps = [-0.15,-0.28,-0.37,-0.47,-0.26,-0.22,-0.39,-0.43,-0.48,-0.43,-0.44,-0.36,-0.34,-0.15,-0.14,-0.36,-0.46,-0.3,-0.27,-0.27,-0.19,-0.29,-0.27,-0.27,-0.22,-0.11,-0.22,-0.2,-0.36,-0.16,-0.1,-0.16,-0.29,-0.12,-0.2,-0.15,-0.03,0,-0.02,0.12,0.18,0.06,0.09,0.2,0.09,-0.07,-0.03,-0.11,-0.11,-0.17,-0.07,0.01,0.08,-0.13,-0.14,-0.19,0.05,0.06,0.03,-0.03,0.06,0.03,0.05,-0.2,-0.11,-0.06,-0.02,-0.08,0.05,0.03,-0.08,0.01,0.16,-0.07,-0.01,-0.1,0.18,0.07,0.16,0.26,0.32,0.14,0.31,0.16,0.12,0.18,0.32,0.39,0.27,0.45,0.41,0.22,0.23,0.32,0.45,0.33,0.47,0.61,0.39,0.4,0.54,0.63,0.62,0.54,0.68,0.64,0.66,0.54,0.66,0.72,0.61,0.65,0.68,0.74,0.9,1.01,0.92,0.85,0.98,1.02];
       this.createRadialChart(data[this.state.year]);
     });
   }
@@ -108,9 +109,10 @@ class App extends Component {
         });
         if (this.state.year >= 2020) {
           clearInterval(interval);
+          this.createInteractiveLayer(this.data[this.state.year]);
         }
-      }, 400);
-    }, 3500);
+      }, 300);
+    }, 2000);
   }
   createLineChart() {
     chart_elements.append('g')
@@ -118,8 +120,7 @@ class App extends Component {
       .attr('transform', 'translate(' + (width / 2 - 400) + ', 40)')
       .attr('class', style.title)
       .html('Temperature anomalies');
-
-    let line_container = chart_elements.append('g')
+    const line_container = chart_elements.append('g')
       .attr('class', style.line_container)
       .attr('transform', 'translate(' + (width / 2 + 200) + ', 20)');
     line_container.append('text')
@@ -143,7 +144,6 @@ class App extends Component {
     const line = d3.line()
       .x((d, i) => xScale(i))
       .y(d => yScale(d));
-
     chart_elements.select('.' + style.current_avg_temp_line)
       .attr('class', style.current_avg_temp_line)
       .style('stroke', '#000')
@@ -155,7 +155,7 @@ class App extends Component {
     }), () => this.updateCenterContainer());
   }
   createCenterContainer() {
-    const center_diameter = 210;
+    const center_diameter = 175;
     chart_elements.append('g')
       .attr('transform', 'translate(' + (width / 2 - center_diameter / 2) + ',' + (height / 2 - center_diameter / 2) + ')')
       .append('foreignObject')
@@ -190,8 +190,8 @@ class App extends Component {
         .padRadius(inner_radius))
       .attr('opacity', 0)
       .transition()
-      .duration(500)
-      .delay((d, i) => i * 15)
+      .duration(300)
+      .delay((d, i) => i * 10)
       .attr('opacity', 1)
       .style('pointer-events', 'none');
   }
@@ -199,7 +199,7 @@ class App extends Component {
     d3.selectAll('.' + style.bars_container)
       .selectAll('path')
       .transition()
-      .duration(350)
+      .duration(100)
       .attr('fill', d => (d.country !== '') ? f(data.find(element => element.country === d['country'])['temp']) : y(my_domain[0]))
       .attr('d', d3.arc()
         .innerRadius(d => y(my_domain[0]))
@@ -255,7 +255,7 @@ class App extends Component {
           .attr('transform', d => (x(d.id) + x.bandwidth() / 2 + Math.PI) % (2 * Math.PI) < Math.PI ? 'rotate(180)' : 'rotate(0)')
         // Radial line
         d3.select(nodes[i]).append('line')
-          .attr('x1', 120)
+          .attr('x1', 87)
           .attr('x2', y(my_domain[1]) + 5)
           .attr('y1', 0)
           .attr('y2', 0)
@@ -332,7 +332,7 @@ class App extends Component {
       .attr('fill', 'transparent')
       .attr('d', d3.arc()
         .innerRadius(inner_radius)
-        .outerRadius(outer_radius)
+        .outerRadius(outer_radius + 50)
         .startAngle(d => x(d.id))
         .endAngle(d => x(d.id) + x.bandwidth())
         .padRadius(inner_radius))
@@ -341,21 +341,23 @@ class App extends Component {
       .on('mouseout', (event, d) => this.onMouseOut(event, d));
   }
   onMouseOver(event, d) {
-    d3.select('.' + style.bars_container)
-      .selectAll('path:not(path[data-id="' + d.id + '"])')
-      .style('opacity', 0.2);
-    d3.select('.' + style.bars_info_container)
-      .select('text[data-id="' + d.id + '"]')
-      .style('opacity', 1);
-    d3.select('.' + style.bars_info_container)
-      .selectAll('text:not(text[data-id="' + d.id + '"])')
-      .style('opacity', 0.2);
-    d3.select(event.currentTarget).style('opacity', 1);
-    d3.select('.' + style.tooltip)
-      .style('left', (event.pageX + 20) + 'px')
-      .style('top', (event.pageY + 20) + 'px')
-      .style('opacity', 1)
-      .html(d.country + ': ' + ((d.temp > 0) ? '+' : '') + d.temp + ' °C');
+    if (d.country !== '') {
+      d3.select('.' + style.bars_container)
+        .selectAll('path:not(path[data-id="' + d.id + '"])')
+        .style('opacity', 0.2);
+      d3.select('.' + style.bars_info_container)
+        .select('text[data-id="' + d.id + '"]')
+        .style('opacity', 1);
+      d3.select('.' + style.bars_info_container)
+        .selectAll('text:not(text[data-id="' + d.id + '"])')
+        .style('opacity', 0.2);
+      d3.select(event.currentTarget).style('opacity', 1);
+      d3.select('.' + style.tooltip)
+        .style('left', (event.pageX + 20) + 'px')
+        .style('top', (event.pageY + 20) + 'px')
+        .style('opacity', 1)
+        .html(d.country + ': ' + ((d.temp > 0) ? '+' : '') + d.temp + ' °C');
+    }
   }
   onMouseOut(event, d) {
     d3.select(event.currentTarget).style('opacity', 0.8);
@@ -365,6 +367,8 @@ class App extends Component {
     d3.select('.' + style.bars_info_container)
       .selectAll('text')
       .style('opacity', d => 1);
+    d3.select('.' + style.tooltip)
+      .style('opacity', 0)
   }
   handleSliderValueChange(event) {
     clearInterval(interval);
@@ -396,10 +400,11 @@ class App extends Component {
           }
         </div>
         <div className={style.range_container}>
-          <div>Data: <a href="https://climateknowledgeportal.worldbank.org/download-data">World Bank</a></div>
+          <div>World data: <a href="https://data.giss.nasa.gov/gistemp/">NASA</a></div>
+          <div>Country data: <a href="https://climateknowledgeportal.worldbank.org/download-data">World Bank</a></div>
           <div>Author: <a href="https://twitter.com/teelmo">Teemo Tebest</a>, EBU</div>
-          <div>Reference period: 1981–2010</div>
-          <input type="range" min={1901} value={this.state.year} max={2020} onChange={(event) => this.handleSliderValueChange(event)} />
+          <div>Reference period: 1951–1980</div>
+          <input type="range" min={1901} max={2020} value={this.state.year} onChange={(event) => this.handleSliderValueChange(event)} />
         </div>
         <div className={style.tooltip}></div>
       </div>
