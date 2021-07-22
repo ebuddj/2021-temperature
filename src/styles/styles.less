@@ -5,9 +5,10 @@ body {
   padding: 0;
 }
 .app {
+  background-color: #f0f0f0;
   font-family: 'Lato';
   margin: auto auto;
-  max-height: 100vh;
+  height: 100vh;
   overflow: hidden;
   .tooltip {
     background-color: rgba(255, 255, 255, 0.9);
@@ -19,7 +20,6 @@ body {
     z-index: 3;
   }
   .chart_container {
-    background-color: #f0f0f0;
     svg {
       .title {
         font-size: 20pt;
@@ -132,7 +132,7 @@ body {
     opacity: 1;
     z-index: 1;
     position: absolute;
-    left: calc(50% + 200px);
+    left: calc(50% + 230px);
     &:after,
     &:before {
       display: inline-block;
@@ -156,7 +156,7 @@ body {
       display: inline-block;
       float: left;
       height: 14px;
-      width: 1.8px;
+      width: 1.6px;
       .scale_text_zero {
         left: -10px;
         line-height: 14px;

@@ -12,13 +12,13 @@ const scaleMax = 3,
       scaleMin = -3,
       f = chroma.scale('RdYlBu').padding(-0.1).domain([scaleMax, 0, scaleMin]),
       f_text = chroma.scale(['red', 'rgba(0, 0, 0, 0.3)', 'blue']).padding(-1).domain([scaleMax, 0, scaleMin]);
-const margin = {top: 0, right: 50, bottom: 0, left: 0},
+const margin = {top: 0, right: 0, bottom: 0, left: 0},
       inner_radius = 0,
       outer_radius = 400,
       my_domain = [-3.5, 3.5],
       legend_ring_points = [-2, -1, 0, 1, 2, 3],
-      height = window.innerHeight - margin.top - margin.bottom,
-      width = window.innerWidth - margin.left - margin.right;
+      height = (window.innerHeight > window.innerWidth) ? window.innerWidth - margin.left - margin.right : window.innerHeight - margin.left - margin.right,
+      width = (window.innerHeight > window.innerWidth) ? window.innerHeight - margin.top - margin.bottom : window.innerWidth - margin.top - margin.bottom;
 
 const x = d3.scaleBand()
   .range([Math.PI / 2 + 0.07, Math.PI / 2 + 2 * Math.PI - 0.1])
@@ -65,10 +65,10 @@ class App extends Component {
     d3.json('./data/data.json').then((data) => {
       x.domain(data[this.state.year].map(d => d.id));
       this.data = data;
-       Object.keys(data).forEach((year) => {
-        let temperature = data[year].reduce((accumulator, current, index, array) => (accumulator + current.temp), 0) / data[year].length;
-        avg_tmps.push(temperature);
-      });
+      // Object.keys(data).forEach((year) => {
+      //   let temperature = data[year].reduce((accumulator, current, index, array) => (accumulator + current.temp), 0) / data[year].length;
+      //   avg_tmps.push(temperature);
+      // });
       avg_tmps = [-0.15,-0.28,-0.37,-0.47,-0.26,-0.22,-0.39,-0.43,-0.48,-0.43,-0.44,-0.36,-0.34,-0.15,-0.14,-0.36,-0.46,-0.3,-0.27,-0.27,-0.19,-0.29,-0.27,-0.27,-0.22,-0.11,-0.22,-0.2,-0.36,-0.16,-0.1,-0.16,-0.29,-0.12,-0.2,-0.15,-0.03,0,-0.02,0.12,0.18,0.06,0.09,0.2,0.09,-0.07,-0.03,-0.11,-0.11,-0.17,-0.07,0.01,0.08,-0.13,-0.14,-0.19,0.05,0.06,0.03,-0.03,0.06,0.03,0.05,-0.2,-0.11,-0.06,-0.02,-0.08,0.05,0.03,-0.08,0.01,0.16,-0.07,-0.01,-0.1,0.18,0.07,0.16,0.26,0.32,0.14,0.31,0.16,0.12,0.18,0.32,0.39,0.27,0.45,0.41,0.22,0.23,0.32,0.45,0.33,0.47,0.61,0.39,0.4,0.54,0.63,0.62,0.54,0.68,0.64,0.66,0.54,0.66,0.72,0.61,0.65,0.68,0.74,0.9,1.01,0.92,0.85,0.98,1.02];
       this.createRadialChart(data[this.state.year]);
     });
@@ -117,12 +117,12 @@ class App extends Component {
   createLineChart() {
     chart_elements.append('g')
       .append('text')
-      .attr('transform', 'translate(' + (width / 2 - 400) + ', 40)')
+      .attr('transform', 'translate(' + (width / 2 - 450) + ', 40)')
       .attr('class', style.title)
       .html('Temperature anomalies');
     const line_container = chart_elements.append('g')
       .attr('class', style.line_container)
-      .attr('transform', 'translate(' + (width / 2 + 200) + ', 20)');
+      .attr('transform', 'translate(' + (width / 2 + 230) + ', 20)');
     line_container.append('text')
       .attr('x', 5)
       .attr('class', style.linegraptext)
