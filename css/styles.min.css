@@ -132,12 +132,12 @@ body {
   width: 28px;
 }
 .app___2khK2 .scales_container___1pYId:before {
-  content: '+3 °C';
+  content: '+3°C';
   right: -31px;
   text-align: left;
 }
 .app___2khK2 .scales_container___1pYId:after {
-  content: '-3 °C';
+  content: '-3°C';
   left: -31px;
   text-align: right;
 }
