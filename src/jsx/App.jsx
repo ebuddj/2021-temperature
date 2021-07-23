@@ -10,7 +10,7 @@ import chroma from 'chroma-js';
 // https://gka.github.io/chroma.js/
 const scaleMax = 3,
       scaleMin = -3,
-      f = chroma.scale('RdYlBu').padding(-0.1).domain([scaleMax, 0, scaleMin]),
+      f = chroma.scale('RdYlBu').domain([scaleMax, 0, scaleMin]),
       f_text = chroma.scale(['red', 'rgba(0, 0, 0, 0.3)', 'blue']).padding(-1).domain([scaleMax, 0, scaleMin]);
 const margin = {top: 0, right: 0, bottom: 0, left: 0},
       inner_radius = 0,
@@ -36,7 +36,7 @@ const yScale = d3.scaleLinear()
 let chart_elements,
     interval,
     scales = [],
-    avg_tmps = [],
+    avg_temps = [],
     temperature = scaleMin;
 while (temperature < scaleMax) {
   temperature = temperature + 0.05;
@@ -48,7 +48,7 @@ class App extends Component {
     super(props);
 
     this.state = {
-      avg_tmps:[],
+      avg_temps:[],
       year:1901
     }
   }
@@ -67,9 +67,9 @@ class App extends Component {
       this.data = data;
       // Object.keys(data).forEach((year) => {
       //   let temperature = data[year].reduce((accumulator, current, index, array) => (accumulator + current.temp), 0) / data[year].length;
-      //   avg_tmps.push(temperature);
+      //   avg_temps.push(temperature);
       // });
-      avg_tmps = [-0.15,-0.28,-0.37,-0.47,-0.26,-0.22,-0.39,-0.43,-0.48,-0.43,-0.44,-0.36,-0.34,-0.15,-0.14,-0.36,-0.46,-0.3,-0.27,-0.27,-0.19,-0.29,-0.27,-0.27,-0.22,-0.11,-0.22,-0.2,-0.36,-0.16,-0.1,-0.16,-0.29,-0.12,-0.2,-0.15,-0.03,0,-0.02,0.12,0.18,0.06,0.09,0.2,0.09,-0.07,-0.03,-0.11,-0.11,-0.17,-0.07,0.01,0.08,-0.13,-0.14,-0.19,0.05,0.06,0.03,-0.03,0.06,0.03,0.05,-0.2,-0.11,-0.06,-0.02,-0.08,0.05,0.03,-0.08,0.01,0.16,-0.07,-0.01,-0.1,0.18,0.07,0.16,0.26,0.32,0.14,0.31,0.16,0.12,0.18,0.32,0.39,0.27,0.45,0.41,0.22,0.23,0.32,0.45,0.33,0.47,0.61,0.39,0.4,0.54,0.63,0.62,0.54,0.68,0.64,0.66,0.54,0.66,0.72,0.61,0.65,0.68,0.74,0.9,1.01,0.92,0.85,0.98,1.02];
+      avg_temps = [-0.15,-0.28,-0.37,-0.47,-0.26,-0.22,-0.39,-0.43,-0.48,-0.43,-0.44,-0.36,-0.34,-0.15,-0.14,-0.36,-0.46,-0.3,-0.27,-0.27,-0.19,-0.29,-0.27,-0.27,-0.22,-0.11,-0.22,-0.2,-0.36,-0.16,-0.1,-0.16,-0.29,-0.12,-0.2,-0.15,-0.03,0,-0.02,0.12,0.18,0.06,0.09,0.2,0.09,-0.07,-0.03,-0.11,-0.11,-0.17,-0.07,0.01,0.08,-0.13,-0.14,-0.19,0.05,0.06,0.03,-0.03,0.06,0.03,0.05,-0.2,-0.11,-0.06,-0.02,-0.08,0.05,0.03,-0.08,0.01,0.16,-0.07,-0.01,-0.1,0.18,0.07,0.16,0.26,0.32,0.14,0.31,0.16,0.12,0.18,0.32,0.39,0.27,0.45,0.41,0.22,0.23,0.32,0.45,0.33,0.47,0.61,0.39,0.4,0.54,0.63,0.62,0.54,0.68,0.64,0.66,0.54,0.66,0.72,0.61,0.65,0.68,0.74,0.9,1.01,0.92,0.85,0.98,1.02];
       this.createRadialChart(data[this.state.year]);
     });
   }
@@ -131,7 +131,7 @@ class App extends Component {
       .attr('class', style.grid)
       .call(d3.axisLeft(yScale)
         .ticks(1)
-        .tickFormat(i => i + ' °C')
+        .tickFormat(i => i + '°C')
         .tickSizeInner(-200)
         .tickSizeOuter(0)
       );
@@ -147,11 +147,11 @@ class App extends Component {
     chart_elements.select('.' + style.current_avg_temp_line)
       .attr('class', style.current_avg_temp_line)
       .style('stroke', '#000')
-      .attr('d', line(avg_tmps.slice(0, this.state.year - 1901)));
+      .attr('d', line(avg_temps.slice(0, this.state.year - 1901)));
   }
   getCurrentYearAverageTemp(data) {
     this.setState((state, props) => ({
-      current_avg_temp:avg_tmps[this.state.year - 1901].toFixed(1)
+      current_avg_temp:avg_temps[this.state.year - 1901].toFixed(1)
     }), () => this.updateCenterContainer());
   }
   createCenterContainer() {
@@ -171,7 +171,7 @@ class App extends Component {
   }
   updateCenterContainer() {
     d3.select('.' + style.center_text).select('text').select('.' + style.year).html(this.state.year);
-    d3.select('.' + style.center_text).select('text').select('.' + style.temp).attr('fill', f_text(this.state.current_avg_temp)).html(((this.state.current_avg_temp > 0) ? '+' : '') + this.state.current_avg_temp + ' °C');
+    d3.select('.' + style.center_text).select('text').select('.' + style.temp).attr('fill', f_text(this.state.current_avg_temp)).html(((this.state.current_avg_temp > 0) ? '+' : '') + this.state.current_avg_temp + '°C');
   }
   createRadialBars(data) {
     chart_elements.append('g')
@@ -225,7 +225,7 @@ class App extends Component {
       .join('text')
       .attr('x', d => width / 2 + y(d) + 3)
       .attr('y', d => height / 2 + 3)
-      .text(d => (d > 0) ? '+' + d + '.0 °C' : d + '.0 °C')
+      .text(d => (d > 0) ? '+' + d + '.0°C' : d + '.0°C')
       .style('opacity', 0.7)
       .style('font-size', d => (d === 0) ? '12pt' : '10pt')
       .style('font-weight', d => (d === 0) ? 700 : 400)
@@ -356,7 +356,7 @@ class App extends Component {
         .style('left', (event.pageX + 20) + 'px')
         .style('top', (event.pageY + 20) + 'px')
         .style('opacity', 1)
-        .html(d.country + ': ' + ((d.temp > 0) ? '+' : '') + d.temp + ' °C');
+        .html(d.country + ': ' + ((d.temp > 0) ? '+' : '') + d.temp + '°C');
     }
   }
   onMouseOut(event, d) {
@@ -396,7 +396,7 @@ class App extends Component {
         <div className={style.scales_container}>
           {
             // The scale on the right.
-            scales.map((scale, i) => ((scale > -0.025 && scale < 0.025) ? (<div key={i} className={style.scale_container} style={{backgroundColor:f(scale), borderLeft:'1px dashed rgba(0, 0, 0, 0.3)'}}><div className={style.scale_text_zero}><div>0 °C</div></div></div>) :  (<div key={i} className={style.scale_container} style={{backgroundColor:f(scale)}}></div>)))
+            scales.map((scale, i) => ((scale > -0.025 && scale < 0.025) ? (<div key={i} className={style.scale_container} style={{backgroundColor:f(scale), borderLeft:'1px dashed rgba(0, 0, 0, 0.3)'}}><div className={style.scale_text_zero}><div>0°C</div></div></div>) :  (<div key={i} className={style.scale_container} style={{backgroundColor:f(scale)}}></div>)))
           }
         </div>
         <div className={style.range_container}>
