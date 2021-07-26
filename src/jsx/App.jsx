@@ -147,7 +147,7 @@ class App extends Component {
     chart_elements.select('.' + style.current_avg_temp_line)
       .attr('class', style.current_avg_temp_line)
       .style('stroke', '#000')
-      .attr('d', line(avg_temps.slice(0, this.state.year - 1901)));
+      .attr('d', line(avg_temps.slice(0, this.state.year - 1900)));
   }
   getCurrentYearAverageTemp(data) {
     this.setState((state, props) => ({
