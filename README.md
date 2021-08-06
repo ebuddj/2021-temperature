@@ -15,7 +15,7 @@ Missing data for Armenia and Belize.
 * [NASA](https://data.giss.nasa.gov/gistemp/)
 
 **EBU links**
-* []()
+* [News Exchange](https://news-exchange.ebu.ch/item_detail/2ee6d07895acda9a9b3ca64b2d57a6e2/2021_10034929)
 
 **Used by**
 * []()
