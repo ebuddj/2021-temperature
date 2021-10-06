@@ -12,7 +12,9 @@ Missing data for Armenia and Belize.
 
 **Sources**
 * [Worldbank](https://climateknowledgeportal.worldbank.org/download-data)
+  * Data is not intended for commercial purposes. Please properly cite any data used from the CCKP. World Bank Group, Climate Change Knowledge Portal. 
 * [NASA](https://data.giss.nasa.gov/gistemp/)
+  * When referencing the GISTEMP v4 data provided here, please cite both this webpage and also our most recent scholarly publication about the data. In citing the webpage, be sure to include the date of access. 
 
 **EBU links**
 * [News Exchange](https://news-exchange.ebu.ch/item_detail/2ee6d07895acda9a9b3ca64b2d57a6e2/2021_10034929)
