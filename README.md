@@ -20,7 +20,9 @@ Missing data for Armenia and Belize.
 * [News Exchange](https://news-exchange.ebu.ch/item_detail/2ee6d07895acda9a9b3ca64b2d57a6e2/2021_10034929)
 
 **Used by**
-* []()
+* SSR/Switzerland on RSI La 1
+* RTV/Macedonia on MRT 1 Macedonia
+* TVR/Romania on TVR 2
 
 ## How to use
 
